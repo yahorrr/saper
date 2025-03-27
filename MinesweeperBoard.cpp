@@ -22,7 +22,7 @@ MinesweeperBoard::MinesweeperBoard()
     board[0][2] = {true, true, false};
 }
 
-MinesweeperBoard::MinesweeperBoard(int width, int height, GameMode mode) {
+MinesweeperBoard::MinesweeperBoard(const int width, const int height, const GameMode mode) {
     this->width = width;
     this->height = height;
     board.resize(height, width);
@@ -48,9 +48,9 @@ MinesweeperBoard::MinesweeperBoard(int width, int height, GameMode mode) {
     }
 }
 
-void MinesweeperBoard::placeMinesRandomly(double percentage)
+void MinesweeperBoard::placeMinesRandomly(const double percentage)
 {
-    int totalMines = std::ceil(width * height * percentage);
+    const int totalMines = std::ceil(width * height * percentage);
     int placedMines = 0;
     while (placedMines < totalMines) {
         int x = rand() % width;
@@ -86,6 +86,5 @@ void MinesweeperBoard::debug_display() const {
             cout << "[" << mina << odkryte << flaga << "] ";
         }
         cout << "\n";
-
     }
 }
