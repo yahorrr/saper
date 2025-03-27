@@ -24,6 +24,7 @@ class MinesweeperBoard
     int width;
     int height;
     void clearBoard();
+    void placeMinesRandomly(double percentage);
 
 public:
     MinesweeperBoard();
