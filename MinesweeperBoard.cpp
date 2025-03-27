@@ -10,10 +10,8 @@ using std::endl;
 using std::string;
 using std::vector;
 
-MinesweeperBoard::MinesweeperBoard()
+MinesweeperBoard::MinesweeperBoard() : width(5), height(7)
 {
-    width = 5;
-    height = 7;
     board.resize(height, width);
     clearBoard();
 
@@ -22,20 +20,14 @@ MinesweeperBoard::MinesweeperBoard()
     board[0][2] = {true, true, false};
 }
 
-MinesweeperBoard::MinesweeperBoard(const int width, const int height, const GameMode mode) {
-    this->width = width;
-    this->height = height;
+MinesweeperBoard::MinesweeperBoard(const int width, const int height, const GameMode mode) : width(width), height(height), mode(mode)
+{
     board.resize(height, width);
     clearBoard();
 
     srand(time(nullptr));
-    if (mode == EASY) {
-        placeMinesRandomly(0.1);
-    } else if (mode == NORMAL) {
-        placeMinesRandomly(0.2);
-    } else if (mode == HARD) {
-        placeMinesRandomly(0.3);
-    } else if (mode == DEBUG) {
+
+    if (mode == DEBUG) {
         for (int i = 0; i < std::min(width, height); i++) {
             board[i][i] = {true, false, false};; // przekątna
         }
@@ -46,11 +38,35 @@ MinesweeperBoard::MinesweeperBoard(const int width, const int height, const Game
             board[y][0] = {true, false, false};; // co drugie pole w pierwszej kolumnie
         }
     }
+    else
+    {
+        placeMinesRandomly();
+    }
 }
 
-void MinesweeperBoard::placeMinesRandomly(const double percentage)
+int MinesweeperBoard::modeToProcent() const
 {
-    const int totalMines = std::ceil(width * height * percentage);
+    switch (mode) {
+        case EASY:
+            return 10;
+            break;
+        case NORMAL:
+            return 20;
+            break;
+        case HARD:
+            return 30;
+            break;
+        case DEBUG:
+            return 0;
+            break;
+    }
+
+    return -1;
+}
+
+void MinesweeperBoard::placeMinesRandomly()
+{
+    const int totalMines = getMineCount();
     int placedMines = 0;
     while (placedMines < totalMines) {
         int x = rand() % width;
@@ -87,4 +103,19 @@ void MinesweeperBoard::debug_display() const {
         }
         cout << "\n";
     }
+}
+
+int MinesweeperBoard::getBoardWidth() const
+{
+    return width;
+}
+
+int MinesweeperBoard::getBoardHeight() const
+{
+    return height;
+}
+
+int MinesweeperBoard::getMineCount() const
+{
+    return std::ceil((double)width * height * modeToProcent() / 100);
 }
