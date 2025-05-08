@@ -25,9 +25,12 @@ class MinesweeperBoard
     int width;
     int height;
     GameMode mode;
+    GameState state;
+    int revealedFields = 0;
+    int numberOfMines = 0;
 
     void clearBoard();
-    int modeToProcent() const;
+    int modeToPercent() const;
     void placeMinesRandomly();
 public:
     MinesweeperBoard();
@@ -37,6 +40,15 @@ public:
     int getBoardWidth() const;
     int getBoardHeight() const;
     int getMineCount() const;
+    GameState getGameState() const;
+    int countMines(int row, int col) const;
+    bool hasFlag(int row, int col) const;
+    bool hasMine(int row, int col) const;
+    void toggleFlag(int row, int col);
+    void revealField(int row, int col);
+    bool isRevealed(int row, int col) const;
+    char getFieldInfo(int row, int col) const;
+    bool isValidField(int row, int col) const;
 
 };
 #endif //MINESWEEPERBOARD_H
