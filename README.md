@@ -66,5 +66,3 @@ To build and run this project, you’ll need:
 - (Optional) Development packages for SFML (on Linux: `libsfml-dev`, etc.)  
 
 Make sure SFML is properly installed and linkable.
-
----
